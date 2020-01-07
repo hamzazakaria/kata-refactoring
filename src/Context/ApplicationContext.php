@@ -1,11 +1,18 @@
 <?php
 
+namespace Evaneos\Context;
+
+use Evaneos\Entity\Site;
+use Evaneos\Entity\User;
+use Evaneos\Helper\SingletonTrait;
+use Faker\Factory;
+
 class ApplicationContext
 {
     use SingletonTrait;
 
     /**
-     * @var Site
+     * @var \Evaneos\Entity\Site
      */
     private $currentSite;
     /**
@@ -15,7 +22,7 @@ class ApplicationContext
 
     protected function __construct()
     {
-        $faker = \Faker\Factory::create();
+        $faker = Factory::create();
         $this->currentSite = new Site($faker->randomNumber(), $faker->url);
         $this->currentUser = new User($faker->randomNumber(), $faker->firstName, $faker->lastName, $faker->email);
     }

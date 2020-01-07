@@ -1,5 +1,15 @@
 <?php
 
+namespace Evaneos;
+
+use Evaneos\Context\ApplicationContext;
+use Evaneos\Entity\Quote;
+use Evaneos\Entity\Template;
+use Evaneos\Entity\User;
+use Evaneos\Repository\DestinationRepository;
+use Evaneos\Repository\QuoteRepository;
+use Evaneos\Repository\SiteRepository;
+
 class TemplateManager
 {
     public function getTemplateComputed(Template $tpl, array $data)
@@ -63,7 +73,8 @@ class TemplateManager
          * USER
          * [user:*]
          */
-        $_user  = (isset($data['user'])  and ($data['user']  instanceof User))  ? $data['user']  : $APPLICATION_CONTEXT->getCurrentUser();
+        $_user  = (isset($data['user'])  and ($data['user']  instanceof User))  ? $data['user']  :
+            $APPLICATION_CONTEXT->getCurrentUser();
         if($_user) {
             (strpos($text, '[user:first_name]') !== false) and $text = str_replace('[user:first_name]'       , ucfirst(mb_strtolower($_user->firstname)), $text);
         }
