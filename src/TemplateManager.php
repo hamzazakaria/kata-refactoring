@@ -4,21 +4,25 @@ namespace Evaneos;
 
 use Evaneos\Context\PatternContext;
 use Evaneos\Entity\Template;
+use Evaneos\Exception\TemplateException;
 use Evaneos\Pattern\QuotePattern;
 use Evaneos\Pattern\UserPattern;
 use RuntimeException;
 
-/**
- * Class TemplateManager
- *
- * @package Evaneos
- */
+
 class TemplateManager
 {
+    /**
+     * @param \Evaneos\Entity\Template $tpl
+     * @param array                    $data
+     *
+     * @return \Evaneos\Entity\Template
+     * @throws \Evaneos\Exception\TemplateException
+     */
     public function getTemplateComputed(Template $tpl, array $data)
     {
         if (!$tpl) {
-            throw new RuntimeException('no tpl given');
+            throw new TemplateException('no tpl given');
         }
 
         $replaced = clone($tpl);
