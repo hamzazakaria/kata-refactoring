@@ -6,7 +6,7 @@ use Evaneos\Entity\Site;
 use Evaneos\Helper\SingletonTrait;
 use Faker\Factory;
 
-class SiteRepository implements Repository
+class SiteRepository implements RepositoryInterface
 {
     use SingletonTrait;
 
@@ -20,6 +20,7 @@ class SiteRepository implements Repository
         // DO NOT MODIFY THIS METHOD
         $faker = Factory::create();
         $faker->seed($id);
+
         return new Site($id, $faker->url);
     }
 }

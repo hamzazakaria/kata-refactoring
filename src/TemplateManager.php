@@ -9,13 +9,19 @@ use Evaneos\Entity\User;
 use Evaneos\Repository\DestinationRepository;
 use Evaneos\Repository\QuoteRepository;
 use Evaneos\Repository\SiteRepository;
+use RuntimeException;
 
+/**
+ * Class TemplateManager
+ *
+ * @package Evaneos
+ */
 class TemplateManager
 {
     public function getTemplateComputed(Template $tpl, array $data)
     {
         if (!$tpl) {
-            throw new \RuntimeException('no tpl given');
+            throw new RuntimeException('no tpl given');
         }
 
         $replaced = clone($tpl);
@@ -25,14 +31,19 @@ class TemplateManager
         return $replaced;
     }
 
+    /**
+     * @param       $text
+     * @param array $data
+     *
+     * @return string|string[]
+     */
     private function computeText($text, array $data)
     {
         $APPLICATION_CONTEXT = ApplicationContext::getInstance();
 
         $quote = (isset($data['quote']) && $data['quote'] instanceof Quote) ? $data['quote'] : null;
 
-        if ($quote)
-        {
+        if ($quote) {
             $site = SiteRepository::getInstance()->getById($quote->siteId);
             $destination = DestinationRepository::getInstance()->getById($quote->destinationId);
             $quote = QuoteRepository::getInstance()->getById($quote->id);
@@ -67,13 +78,10 @@ class TemplateManager
             }
         }
 
-        $_user  = (isset($data['user'])  && ($data['user']  instanceof User))  ? $data['user'] : $APPLICATION_CONTEXT->getCurrentUser();
+        $_user = (isset($data['user']) && ($data['user'] instanceof User)) ? $data['user'] : $APPLICATION_CONTEXT->getCurrentUser();
 
-        if($_user) {
-            if(strpos($text, '[user:first_name]') !== false)
-            {
-                $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($_user->firstname)), $text);
-            }
+        if ($_user && strpos($text, '[user:first_name]') !== false) {
+            $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($_user->firstname)), $text);
         }
 
         return $text;

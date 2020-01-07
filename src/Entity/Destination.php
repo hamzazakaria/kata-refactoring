@@ -10,6 +10,14 @@ class Destination
     public $name;
     public $computerName;
 
+    /**
+     * Destination constructor.
+     *
+     * @param $id
+     * @param $countryName
+     * @param $conjunction
+     * @param $computerName
+     */
     public function __construct($id, $countryName, $conjunction, $computerName)
     {
         $this->id = $id;

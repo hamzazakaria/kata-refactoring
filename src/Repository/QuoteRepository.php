@@ -6,7 +6,7 @@ use Evaneos\Entity\Quote;
 use Evaneos\Helper\SingletonTrait;
 use Faker\Factory;
 
-class QuoteRepository implements Repository
+class QuoteRepository implements RepositoryInterface
 {
     use SingletonTrait;
 
@@ -19,6 +19,7 @@ class QuoteRepository implements Repository
     {
         $generator = Factory::create();
         $generator->seed($id);
+
         return new Quote(
             $id,
             $generator->numberBetween(1, 10),

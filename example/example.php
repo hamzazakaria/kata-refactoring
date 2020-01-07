@@ -22,13 +22,14 @@ Bien cordialement,
 
 L'équipe Evaneos.com
 www.evaneos.com
-");
+"
+);
 $templateManager = new TemplateManager();
 
 $message = $templateManager->getTemplateComputed(
     $template,
     [
-        'quote' => new Quote($faker->randomNumber(), $faker->randomNumber(), $faker->randomNumber(), $faker->date())
+        'quote' => new Quote($faker->randomNumber(), $faker->randomNumber(), $faker->randomNumber(), $faker->date()),
     ]
 );
 

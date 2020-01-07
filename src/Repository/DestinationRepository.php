@@ -6,7 +6,7 @@ use Evaneos\Entity\Destination;
 use Evaneos\Helper\SingletonTrait;
 use Faker\Factory;
 
-class DestinationRepository implements Repository
+class DestinationRepository implements RepositoryInterface
 {
     use SingletonTrait;
 

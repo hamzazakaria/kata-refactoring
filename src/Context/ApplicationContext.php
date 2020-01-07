@@ -20,6 +20,9 @@ class ApplicationContext
      */
     private $currentUser;
 
+    /**
+     * ApplicationContext constructor.
+     */
     protected function __construct()
     {
         $faker = Factory::create();
@@ -27,11 +30,17 @@ class ApplicationContext
         $this->currentUser = new User($faker->randomNumber(), $faker->firstName, $faker->lastName, $faker->email);
     }
 
+    /**
+     * @return \Evaneos\Entity\Site
+     */
     public function getCurrentSite()
     {
         return $this->currentSite;
     }
 
+    /**
+     * @return \Evaneos\Entity\User
+     */
     public function getCurrentUser()
     {
         return $this->currentUser;

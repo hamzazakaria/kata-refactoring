@@ -2,6 +2,11 @@
 
 namespace Evaneos\Helper;
 
+/**
+ * Trait SingletonTrait
+ *
+ * @package Evaneos\Helper
+ */
 trait SingletonTrait
 {
     /**
