@@ -1,17 +1,11 @@
 <?php
 
-require_once __DIR__ . '/../src/Entity/Destination.php';
-require_once __DIR__ . '/../src/Entity/Quote.php';
-require_once __DIR__ . '/../src/Entity/Site.php';
-require_once __DIR__ . '/../src/Entity/Template.php';
-require_once __DIR__ . '/../src/Entity/User.php';
-require_once __DIR__ . '/../src/Helper/SingletonTrait.php';
-require_once __DIR__ . '/../src/Context/ApplicationContext.php';
-require_once __DIR__ . '/../src/Repository/Repository.php';
-require_once __DIR__ . '/../src/Repository/DestinationRepository.php';
-require_once __DIR__ . '/../src/Repository/QuoteRepository.php';
-require_once __DIR__ . '/../src/Repository/SiteRepository.php';
-require_once __DIR__ . '/../src/TemplateManager.php';
+use Evaneos\Context\ApplicationContext;
+use Evaneos\Entity\Quote;
+use Evaneos\Entity\Template;
+use Evaneos\Repository\DestinationRepository;
+use Evaneos\TemplateManager;
+use Faker\Factory;
 
 class TemplateManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -34,7 +28,7 @@ class TemplateManagerTest extends PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        $faker = \Faker\Factory::create();
+        $faker = Factory::create();
 
         $expectedDestination = DestinationRepository::getInstance()->getById($faker->randomNumber());
         $expectedUser = ApplicationContext::getInstance()->getCurrentUser();
@@ -53,18 +47,23 @@ Bien cordialement,
 
 L'équipe Evaneos.com
 www.evaneos.com
-");
+"
+        );
+
         $templateManager = new TemplateManager();
 
         $message = $templateManager->getTemplateComputed(
             $template,
             [
-                'quote' => $quote
+                'quote' => $quote,
             ]
         );
 
-        $this->assertEquals('Votre voyage avec une agence locale ' . $expectedDestination->countryName, $message->subject);
-        $this->assertEquals("
+        $this->assertEquals(
+            'Votre voyage avec une agence locale ' . $expectedDestination->countryName, $message->subject
+        );
+        $this->assertEquals(
+            "
 Bonjour " . $expectedUser->firstname . ",
 
 Merci d'avoir contacté un agent local pour votre voyage " . $expectedDestination->countryName . ".
@@ -73,6 +72,7 @@ Bien cordialement,
 
 L'équipe Evaneos.com
 www.evaneos.com
-", $message->content);
+", $message->content
+        );
     }
 }
